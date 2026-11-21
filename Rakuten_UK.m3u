@@ -1,4 +1,4 @@
-#EXTM3U url-tvg="https://raw.githubusercontent.com/s-digweed/RakutenTV/main/epg.xml"
+#EXTM3U url-tvg="https://raw.githubusercontent.com/s-digweed/RakutenTV/main/epg_UK.xml"
 #EXTINF:-1 tvg-id="france-24-en" tvg-logo="https://images-0.rakuten.tv/storage/global-live-channel/translation/artwork-negative/0fe0be21-9f4b-4c4a-96f7-9a0767278a66.png" group-title="News",France 24 FAST English
 https://amg00106-amg00106c1-rakuten-uk-4654.playouts.now.amagi.tv/playlist/amg00106-france24fast-france24-rakutenuk/playlist.m3u8
 #EXTINF:-1 tvg-id="cgtn-global-biz" tvg-logo="https://images-0.rakuten.tv/storage/global-live-channel/translation/artwork-negative/91e4c517-05c5-46dd-9b62-a26632c51bca.png" group-title="News",CGTN Global Biz
