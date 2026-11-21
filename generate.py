@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """
-RakutenTV UK — EPG + M3U generator
+RakutenTV — EPG + M3U generator
 Fetches programme data from the Rakuten v3/live_channels API and stream
 URLs from the Rakuten v3/avod/streamings API (rakuten.py, needs a UK IP)
 to produce:
-  • epg.xml      — 72-hour XMLTV guide
-  • playlist.m3u — paired M3U playlist (channels with matched streams only)
+  • epg_<REGION>.xml     — 72-hour XMLTV guide
+  • Rakuten_<REGION>.m3u — paired M3U playlist (channels with matched streams only)
+Region comes from the REGION env var (UK default, NL), see REGIONS below.
 """
 
 import hashlib
+import os
 import re
 import time
 import unicodedata
@@ -19,12 +21,27 @@ import pytz
 import requests
 from lxml import etree
 
-import rakuten
-
 # ── Configuration ─────────────────────────────────────────────────────────────
 
-M3U_HASH_FILE      = ".m3u_source_hash"
-TIMEZONE           = pytz.timezone("Europe/London")
+# Per-region settings. Add a region here + a RAKUTEN_<REGION> WireGuard secret.
+REGIONS = {
+    "UK": {"classification_id": "18", "locale": "en", "market": "uk",
+           "tz": "Europe/London",    "lang": "en"},
+    "NL": {"classification_id": "69", "locale": "nl", "market": "nl",
+           "tz": "Europe/Amsterdam", "lang": "nl"},
+}
+REGION = os.getenv("REGION", "UK").strip().upper()
+if REGION not in REGIONS:
+    raise SystemExit(f"Unknown REGION '{REGION}'. Valid: {', '.join(REGIONS)}")
+CFG = REGIONS[REGION]
+os.environ["CLASSIFICATION"] = CFG["market"]   # used by rakuten.py
+
+EPG_FILE           = f"epg_{REGION}.xml"
+M3U_FILE           = f"Rakuten_{REGION}.m3u"
+M3U_HASH_FILE      = f".m3u_source_hash_{REGION}"
+TIMEZONE           = pytz.timezone(CFG["tz"])
+
+import rakuten  # noqa: E402  (must come after CLASSIFICATION is set)
 DT_FORMAT          = "%Y%m%d%H%M%S %z"
 GAP_THRESHOLD_SECS = 60
 
@@ -140,7 +157,7 @@ def fetch_own_streams(data: list):
         channels.append(rakuten.Channel(
             id=ch["id"], numerical_id=-1, title=ch.get("title", ch["id"]),
             type=ch.get("type", ""), channel_number=-1,
-            category=cat_by_id.get(ch["id"], "RakutenTV UK"),
+            category=cat_by_id.get(ch["id"], f"RakutenTV {REGION}"),
             language_ids=langs, logo="",
         ))
 
@@ -179,29 +196,29 @@ def build_xmltv(channels: list, programmes: list) -> bytes:
         prog.set("stop",    to_tz_str(pr["ends_at"]))
 
         title = etree.SubElement(prog, "title")
-        title.set("lang", "en")
+        title.set("lang", CFG["lang"])
         title.text = pr["title"]
 
         if pr.get("subtitle"):
             sub = etree.SubElement(prog, "sub-title")
-            sub.set("lang", "en")
+            sub.set("lang", CFG["lang"])
             sub.text = remove_control_characters(pr["subtitle"])
 
         if pr.get("description"):
             desc = etree.SubElement(prog, "desc")
-            desc.set("lang", "en")
+            desc.set("lang", CFG["lang"])
             desc.text = remove_control_characters(pr["description"])
 
         if pr.get("tags"):
             for tag in pr["tags"]:
                 cat = etree.SubElement(prog, "category")
-                cat.set("lang", "en")
+                cat.set("lang", CFG["lang"])
                 cat.text = tag.get("name", "")
 
     return etree.tostring(root, pretty_print=True, encoding="utf-8")
 
 
-EPG_URL = "https://raw.githubusercontent.com/s-digweed/RakutenTV/main/epg.xml"
+EPG_URL = f"https://raw.githubusercontent.com/s-digweed/RakutenTV/main/{EPG_FILE}"
 
 
 def build_m3u(channels: list) -> str:
@@ -217,7 +234,7 @@ def build_m3u(channels: list) -> str:
 
         tvg_id   = ch.get("tvg_id")   or ch["id"]
         tvg_logo = ch.get("tvg_logo") or ch.get("icon") or ""
-        group    = ch.get("group")    or "RakutenTV UK"
+        group    = ch.get("group")    or f"RakutenTV {REGION}"
 
         lines.append(
             f'#EXTINF:-1 tvg-id="{tvg_id}" '
@@ -241,7 +258,7 @@ def build_m3u(channels: list) -> str:
 def build_api_url(epg_start, epg_end, per_page: int, page: int = 1,
                   include_timestamps: bool = True) -> str:
     params = {
-        "classification_id": "18",
+        "classification_id": CFG["classification_id"],
         "device_identifier": "web",
         "device_stream_audio_quality": "2.0",
         "device_stream_hdr_type": "NONE",
@@ -249,8 +266,8 @@ def build_api_url(epg_start, epg_end, per_page: int, page: int = 1,
         "epg_duration_minutes": "360",
         "epg_ends_at": epg_end.strftime("%Y-%m-%dT%H:%M:%S.000Z"),
         "epg_starts_at": epg_start.strftime("%Y-%m-%dT%H:%M:%S.000Z"),
-        "locale": "en",
-        "market_code": "uk",
+        "locale": CFG["locale"],
+        "market_code": CFG["market"],
         "per_page": str(per_page),
         "page": str(page),
     }
@@ -363,7 +380,7 @@ def main():
             "stream_url": streams.get(ch_id),
             "tvg_id":     ch_id,
             "tvg_logo":   ch_icon,
-            "group":      cat_by_id.get(ch_id, "RakutenTV UK"),
+            "group":      cat_by_id.get(ch_id, f"RakutenTV {REGION}"),
         })
 
         for item in channel.get("live_programs", []):
@@ -392,18 +409,18 @@ def main():
             elif (nxt["starts_at"] - cur["ends_at"]).total_seconds() <= GAP_THRESHOLD_SECS:
                 cur["ends_at"] = nxt["starts_at"]
 
-    with open("epg.xml", "wb") as f:
+    with open(EPG_FILE, "wb") as f:
         f.write(build_xmltv(channels_data, programme_data))
-    print("\nWrote epg.xml")
+    print(f"\nWrote {EPG_FILE}")
 
     if not streams:
         # VPN down / geo-blocked: keep the last good playlist instead of emptying it
-        print("::warning::No stream URLs fetched (UK VPN?) - playlist.m3u left unchanged")
+        print(f"::warning::No stream URLs fetched ({REGION} VPN?) - {M3U_FILE} left unchanged")
         return
 
-    with open("playlist.m3u", "w", encoding="utf-8") as f:
+    with open(M3U_FILE, "w", encoding="utf-8") as f:
         f.write(build_m3u(channels_data))
-    print("Wrote playlist.m3u")
+    print(f"Wrote {M3U_FILE}")
 
 
 if __name__ == "__main__":
