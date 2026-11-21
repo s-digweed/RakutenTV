@@ -6,14 +6,20 @@ on:
     - cron: "0 0,8,16 * * *"
   workflow_dispatch:   # allow manual trigger from the Actions tab
 
+concurrency:
+  group: rakuten-update
+  cancel-in-progress: false
+
 jobs:
   generate:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       contents: write   # needed to push the updated files back
 
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      CLASSIFICATION: uk
 
     steps:
       - name: Checkout repository
@@ -25,15 +31,39 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install requests lxml pytz
+        run: pip install requests lxml pytz python-dotenv
+
+      # Stream URLs are geo-blocked, so run through the UK WireGuard (secret RAKUTEN_UK)
+      - name: Connect UK WireGuard
+        env:
+          RAKUTEN_UK: ${{ secrets.RAKUTEN_UK }}
+        run: |
+          set -euo pipefail
+          if ! grep -q '^\[Interface\]' <<<"${RAKUTEN_UK:-}"; then
+            echo "::error::Secret RAKUTEN_UK is missing or is not a WireGuard config"; exit 1
+          fi
+          sudo apt-get update -qq && sudo apt-get install -y -qq wireguard-tools >/dev/null
+          printf '%s\n' "$RAKUTEN_UK" | sed '/^[[:space:]]*DNS[[:space:]]*=/d' | sudo tee /etc/wireguard/wg0.conf >/dev/null
+          sudo chmod 600 /etc/wireguard/wg0.conf
+          sudo wg-quick up wg0
+          C="$(curl -fsS -m 20 https://ifconfig.co/country-iso 2>/dev/null || curl -fsS -m 20 https://ipinfo.io/country 2>/dev/null || true)"
+          C="$(echo "$C" | tr -d '[:space:]')"
+          echo "Exit country: ${C:-unknown}"
+          if [ -n "$C" ] && [ "$C" != "GB" ]; then
+            echo "::error::VPN exits in '$C', not GB"; exit 1
+          fi
 
       - name: Generate EPG and playlist
         run: python generate.py
 
+      - name: Disconnect WireGuard
+        if: always()
+        run: sudo wg-quick down wg0 2>/dev/null || true
+
       - name: Commit and push updated files
         run: |
           git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add epg.xml playlist.m3u .m3u_source_hash
           # Only commit if something actually changed
           git diff --cached --quiet || git commit -m "chore: update EPG and playlist [$(date -u '+%Y-%m-%d %H:%M UTC')]"
