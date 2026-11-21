@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
 RakutenTV UK — EPG + M3U generator
-Fetches programme data from the Rakuten v3/live_channels API and merges
-stream URLs from an external M3U source to produce:
+Fetches programme data from the Rakuten v3/live_channels API and stream
+URLs from the Rakuten v3/avod/streamings API (rakuten.py, needs a UK IP)
+to produce:
   • epg.xml      — 72-hour XMLTV guide
   • playlist.m3u — paired M3U playlist (channels with matched streams only)
 """
@@ -18,9 +19,10 @@ import pytz
 import requests
 from lxml import etree
 
+import rakuten
+
 # ── Configuration ─────────────────────────────────────────────────────────────
 
-M3U_SOURCE         = "https://www.apsattv.com/rakuten_uk.m3u"
 M3U_HASH_FILE      = ".m3u_source_hash"
 TIMEZONE           = pytz.timezone("Europe/London")
 DT_FORMAT          = "%Y%m%d%H%M%S %z"
@@ -118,71 +120,35 @@ def check_m3u_freshness(text: str) -> None:
         f.write(current_hash)
 
 
-# ── M3U fetching & parsing ────────────────────────────────────────────────────
+# ── Stream URLs (own scraper) ────────────────────────────────────────────────────
 
-def fetch_m3u(url: str):
-    print(f"Fetching M3U: {url}")
-    resp = fetch_with_retry(url)
-    check_m3u_freshness(resp.text)
+def fetch_own_streams(data: list):
+    """
+    Stream URLs + categories straight from Rakuten (replaces apsattv).
+    Returns (streams_by_id, category_by_id).
+    """
+    print("\nFetching stream URLs from Rakuten streamings API ...")
+    try:
+        cat_by_id = rakuten.map_channels_categories(rakuten.Api.get_live_channel_categories())
+    except Exception as exc:
+        print(f"  categories failed: {exc}")
+        cat_by_id = {}
 
-    by_name = {}
-    by_slug = {}
-    lines = resp.text.splitlines()
-    i = 0
+    channels = []
+    for ch in data:
+        langs = [l.get("id") for l in (ch.get("labels") or {}).get("languages", []) or [] if l.get("id")]
+        channels.append(rakuten.Channel(
+            id=ch["id"], numerical_id=-1, title=ch.get("title", ch["id"]),
+            type=ch.get("type", ""), channel_number=-1,
+            category=cat_by_id.get(ch["id"], "RakutenTV UK"),
+            language_ids=langs, logo="",
+        ))
 
-    while i < len(lines):
-        line = lines[i].strip()
-        if line.startswith("#EXTINF"):
-            tvg_id_m   = re.search(r'tvg-id="([^"]*)"',      line)
-            tvg_logo_m = re.search(r'tvg-logo="([^"]*)"',    line)
-            group_m    = re.search(r'group-title="([^"]*)"', line)
-
-            tvg_id   = tvg_id_m.group(1)   if tvg_id_m   else ""
-            tvg_logo = tvg_logo_m.group(1) if tvg_logo_m else ""
-            group    = group_m.group(1)    if group_m    else "RakutenTV UK"
-
-            display_name = line.rsplit(",", 1)[-1].strip()
-
-            stream_url = ""
-            i += 1
-            while i < len(lines):
-                candidate = lines[i].strip()
-                if candidate and not candidate.startswith("#"):
-                    stream_url = candidate
-                    break
-                i += 1
-
-            entry = {
-                "tvg_id":   tvg_id,
-                "tvg_logo": tvg_logo,
-                "group":    group,
-                "name":     display_name,
-                "url":      stream_url,
-            }
-
-            by_name[normalize(display_name)] = entry
-
-            slug_m = re.search(r"RakutenTV-UK_(.+)$", tvg_id)
-            if slug_m:
-                by_slug[slug_m.group(1).lower()] = entry
-
-        i += 1
-
-    print(f"  -> parsed {len(by_name)} channels from M3U")
-    return by_name, by_slug
-
-
-def match_m3u(ch_name: str, ch_id: str, by_name: dict, by_slug: dict):
-    norm = normalize(ch_name)
-
-    if norm in by_name:
-        return by_name[norm]
-    if ch_id.lower() in by_slug:
-        return by_slug[ch_id.lower()]
-    for key, entry in by_name.items():
-        if norm in key or key in norm:
-            return entry
-    return None
+    streams = rakuten.map_channels_streams(channels)
+    print(f"  -> got {len(streams)} stream URLs for {len(channels)} channels")
+    if streams:
+        check_m3u_freshness("\n".join(f"{k} {v}" for k, v in sorted(streams.items())))
+    return streams, cat_by_id
 
 
 # ── XMLTV / M3U builders (unchanged) ──────────────────────────────────────────
@@ -235,7 +201,7 @@ def build_xmltv(channels: list, programmes: list) -> bytes:
     return etree.tostring(root, pretty_print=True, encoding="utf-8")
 
 
-EPG_URL = "https://raw.githubusercontent.com/BuddyChewChew/RakutenTV/main/epg.xml"
+EPG_URL = "https://raw.githubusercontent.com/s-digweed/RakutenTV/main/epg.xml"
 
 
 def build_m3u(channels: list) -> str:
@@ -360,11 +326,11 @@ def fetch_epg_data() -> list:
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
-    m3u_by_name, m3u_by_slug = fetch_m3u(M3U_SOURCE)
-
     print("\nFetching EPG data from Rakuten API ...")
     data = fetch_epg_data()
     print(f"\nRetrieved {len(data)} channels\n")
+
+    streams, cat_by_id = fetch_own_streams(data)
 
     channels_data  = []
     programme_data = []
@@ -387,8 +353,6 @@ def main():
                 ch_language = langs[0].get("id")
             ch_tags = labels.get("tags")
 
-        m3u = match_m3u(ch_name, ch_id, m3u_by_name, m3u_by_slug)
-
         channels_data.append({
             "name":       ch_name,
             "epg_number": channel.get("channel_number"),
@@ -396,10 +360,10 @@ def main():
             "icon":       ch_icon,
             "language":   ch_language,
             "tags":       ch_tags,
-            "stream_url": m3u["url"] if m3u else None,
+            "stream_url": streams.get(ch_id),
             "tvg_id":     ch_id,
-            "tvg_logo":   m3u["tvg_logo"] if m3u else ch_icon,
-            "group":      m3u["group"]    if m3u else "RakutenTV UK",
+            "tvg_logo":   ch_icon,
+            "group":      cat_by_id.get(ch_id, "RakutenTV UK"),
         })
 
         for item in channel.get("live_programs", []):
@@ -431,6 +395,11 @@ def main():
     with open("epg.xml", "wb") as f:
         f.write(build_xmltv(channels_data, programme_data))
     print("\nWrote epg.xml")
+
+    if not streams:
+        # VPN down / geo-blocked: keep the last good playlist instead of emptying it
+        print("::warning::No stream URLs fetched (UK VPN?) - playlist.m3u left unchanged")
+        return
 
     with open("playlist.m3u", "w", encoding="utf-8") as f:
         f.write(build_m3u(channels_data))
