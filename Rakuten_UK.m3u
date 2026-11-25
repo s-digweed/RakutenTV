@@ -12,7 +12,7 @@ https://amg01076-lightning-amg01076c5-rakuten-us-1788.playouts.now.amagi.tv/play
 #EXTINF:-1 tvg-id="cgtn" tvg-logo="https://images-0.rakuten.tv/storage/global-live-channel/translation/artwork-negative/7668fa21-f6d9-4cc5-9f74-cccd94e4c202.png" group-title="News",CGTN
 https://amg00405-rakutentv-cgtn-rakuten-i9tar.amagi.tv/master.m3u8
 #EXTINF:-1 tvg-id="africanews-eng" tvg-logo="https://images-1.rakuten.tv/storage/global-live-channel/translation/artwork-negative/8e7c8df9-a7ff-4ed9-a8c1-760f8064ac0a.png" group-title="News",Africanews
-https://africanews-eng-uk.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-hls-aes128-rtv-6576-restreaming/bitok/eyJzdGlkIjoiYjRiMDVhNmUtMzg0NS00NjQ3LTg0OGMtNTMyYzU0ZmM1ODNlIiwibWt0IjoidWsiLCJjaCI6NjU3NiwicHRmIjo1fQ%3D%3D/live/eds/africanews-en/26036/africanews-en.m3u8
+https://africanews-eng-uk.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-hls-aes128-rtv-6576-restreaming/bitok/eyJzdGlkIjoiZmY2MjA1OTgtMjFiNC00YTFmLWIxMGYtZmRiMTQ4YTQyMzM3IiwibWt0IjoidWsiLCJjaCI6NjU3NiwicHRmIjo1fQ%3D%3D/live/eds/africanews-en/26036/africanews-en.m3u8
 #EXTINF:-1 tvg-id="bloomberg-tv-plus" tvg-logo="https://images-2.rakuten.tv/storage/global-live-channel/translation/artwork-negative/eda4d06b-6685-44ea-887d-985839dd1463.png" group-title="News",Bloomberg TV+
 https://86ebec83.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWV1X0Jsb29tYmVyZ1RWUGx1c19ITFM/playlist.m3u8
 #EXTINF:-1 tvg-id="bloomberg-originals-new" tvg-logo="https://images-0.rakuten.tv/storage/global-live-channel/translation/artwork-negative/8da643c7-9c7c-4a73-84b1-96824c200c6e.png" group-title="News",Bloomberg Originals
@@ -26,7 +26,7 @@ https://amg00453-reuters-amg00453c1-rakuten-uk-2110.playouts.now.amagi.tv/playli
 #EXTINF:-1 tvg-id="ntd-tv" tvg-logo="https://images-3.rakuten.tv/storage/global-live-channel/translation/artwork-negative/3947fd69-d2fc-493a-ba6e-8ed3c509b110.png" group-title="News",NTD News
 https://amg17596-ntdtv-amg17596c1-rakuten-gb-6741.playouts.now.amagi.tv/playlist/amg17596-newtangdynastytelevision-ntdtv-rakutengb/playlist.m3u8
 #EXTINF:-1 tvg-id="euronews-live-eng" tvg-logo="https://images-3.rakuten.tv/storage/global-live-channel/translation/artwork-negative/46d8e1b7-ab6c-495a-9568-d14ab32b12ef.png" group-title="News",Euronews LIVE
-https://euronews-live-eng-uk.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-hls-aes128-rtv-6503-restreaming/bitok/eyJzdGlkIjoiYjM1YTBiODktYmNlYy00Y2I1LWE5MmQtNGJjMDJmNWRlMTU3IiwibWt0IjoidWsiLCJjaCI6NjUwMywicHRmIjo1fQ%3D%3D/live/eds/euronews-en/26031/euronews-en.m3u8
+https://euronews-live-eng-uk.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-hls-aes128-rtv-6503-restreaming/bitok/eyJzdGlkIjoiNTk2NmI1YmQtZGVmZi00ZmI2LTk1MDctMTQ2YmQ0NTlmOTg2IiwibWt0IjoidWsiLCJjaCI6NjUwMywicHRmIjo1fQ%3D%3D/live/eds/euronews-en/26031/euronews-en.m3u8
 #EXTINF:-1 tvg-id="mayday-air-disaster-new" tvg-logo="https://images-2.rakuten.tv/storage/global-live-channel/translation/artwork-negative/cccfcb42-3a48-4600-ac7e-14e4ab77f17b.png" group-title="Docs & Factual",Mayday: Air Disaster
 https://linear-1023.frequency.stream/dist/rakuten-uk/1023/hls/master/playlist.m3u8
 #EXTINF:-1 tvg-id="aftershock-msa-mco" tvg-logo="https://images-3.rakuten.tv/storage/global-live-channel/translation/artwork-negative/671ceb9d-2909-48c5-a7ff-0dacd0c62845.png" group-title="Docs & Factual",Aftershock My Strange Addiction/My Crazy Obsession
@@ -206,7 +206,7 @@ https://d39g1vxj2ef6in.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae0
 #EXTINF:-1 tvg-id="cgtn-china-travel" tvg-logo="https://images-1.rakuten.tv/storage/global-live-channel/translation/artwork-negative/d0947790-e87f-43ba-b215-68832c464336.png" group-title="Lifestyle",China Travel
 https://amg01314-cgtn-amg01314c7-rakuten-gb-10206.playouts.now.amagi.tv/ts-eu-w1-n2/playlist/amg01314-cgtn-cgtnchinatravel-rakutengb/playlist.m3u8
 #EXTINF:-1 tvg-id="med-tv" tvg-logo="https://images-3.rakuten.tv/storage/global-live-channel/translation/artwork-negative/e1f68daa-467c-4512-b0f2-f4e6cdafa638.png" group-title="Lifestyle",Med.TV
-https://med-tv-uk.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-hls-aes128-medtv-1-restreaming/bitok/eyJzdGlkIjoiODRhZDI0MjUtMjhlZC00YjhlLWJiNzMtNzc3MWFkNmI4NzkyIiwibWt0IjoidWsiLCJjaCI6IjEiLCJwdGYiOjV9/hls/main.m3u8
+https://med-tv-uk.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-hls-aes128-medtv-1-restreaming/bitok/eyJzdGlkIjoiYmZhMWNkNmYtNTQ0ZC00NDhjLThmYWYtN2I0NTFlYWVlOTcwIiwibWt0IjoidWsiLCJjaCI6IjEiLCJwdGYiOjV9/hls/main.m3u8
 #EXTINF:-1 tvg-id="travelxp-eng" tvg-logo="https://images-2.rakuten.tv/storage/global-live-channel/translation/artwork-negative/e274a80e-f8ad-4cbd-b83b-02985eca9823.png" group-title="Lifestyle",Travelxp
 https://27c980761ff9437d929e64647afe183a.mediatailor.us-east-1.amazonaws.com/v1/master/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/RakutenTV-eu_TravelXP/playlist.m3u8
 #EXTINF:-1 tvg-id="garden-rescue-en" tvg-logo="https://images-0.rakuten.tv/storage/global-live-channel/translation/artwork-negative/6bd53474-5dcd-4046-8eb9-dab33477e2db.png" group-title="Lifestyle",Garden Rescue
@@ -231,6 +231,8 @@ https://amg01935-amg01935c1-amgplt0165.playout.now3.amagi.tv/playlist/amg01935-a
 https://2787e534302e485b87b77d5ba7979385.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-932-WORBUKENFAST-RAKUTEN_UK/932/rakuten/hls/master/playlist.m3u8
 #EXTINF:-1 tvg-id="racer-international" tvg-logo="https://images-3.rakuten.tv/storage/global-live-channel/translation/artwork-negative/72a78bf8-e524-4c3b-aa8a-0cb53f10b1cd.png" group-title="Sports",RACER International
 https://amg00378-mavtv-amg00378c2-rakuten-us-1048.playouts.now.amagi.tv/playlist/amg00378-mavtvfast-motorsportsnetwork-rakutenus/playlist.m3u8
+#EXTINF:-1 tvg-id="global-champions-tour-gctv-eng" tvg-logo="https://images-1.rakuten.tv/storage/global-live-channel/translation/artwork-negative/993e47ad-281f-42e6-a0e3-a87e3e74b3ff.png" group-title="Sports",Global Champions Tour
+https://amg26268-amg26268c29-amgplt0018.playout.now3.amagi.tv/ts-us-w2-n1/playlist/amg26268-amg26268c29-amgplt0018/playlist.m3u8
 #EXTINF:-1 tvg-id="world-of-free-sports-en" tvg-logo="https://images-1.rakuten.tv/storage/global-live-channel/translation/artwork-negative/73c3dae4-bbce-491e-a838-0482d0eb106f.png" group-title="Sports",World of Freesports
 https://mainstreammedia-worldoffreesportsintl-rakuten.amagi.tv/hls/amagi_hls_data_rakutenAA-mainstreammediafreesportsintl-rakuten/CDN/master.m3u8
 #EXTINF:-1 tvg-id="sports-first-tv" tvg-logo="https://images-3.rakuten.tv/storage/global-live-channel/translation/artwork-negative/8cd1faaf-6e1c-45d6-b166-fc11b103a08e.png" group-title="Sports",Sports First TV
@@ -280,7 +282,7 @@ https://dd46a4a7.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdX
 #EXTINF:-1 tvg-id="cash-in-the-attic" tvg-logo="https://images-1.rakuten.tv/storage/global-live-channel/translation/artwork-negative/35717c55-1b38-4d93-b672-8c3da6c0f357.png" group-title="Entertainment",Cash in The Attic
 https://90fd6af0a5d94a488ed1b0dcbb804f8d.mediatailor.us-east-1.amazonaws.com/v1/master/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/RakutenTV-gb_CashInTheAttic/playlist.m3u8
 #EXTINF:-1 tvg-id="800-pound-gorilla" tvg-logo="https://images-2.rakuten.tv/storage/global-live-channel/translation/artwork-negative/17a79e3a-f5b1-4b7e-b7c0-1ae0b1053840.png" group-title="Entertainment",800 Pound Gorilla
-https://800-pound-gorilla-uk.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-hls-aes128-ottstudio-3-restreaming/bitok/eyJzdGlkIjoiNjRjYjcwOGEtMjU5ZC00NWM3LTgxYTQtNjA5ZDEyZWJmNDM3IiwibWt0IjoidWsiLCJjaCI6IjMiLCJwdGYiOjV9/live/46/master.m3u8
+https://800-pound-gorilla-uk.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-hls-aes128-ottstudio-3-restreaming/bitok/eyJzdGlkIjoiZjBhZmJkMzYtY2I3MS00MTBmLWFjODEtMzM4MmY0MTExNTNjIiwibWt0IjoidWsiLCJjaCI6IjMiLCJwdGYiOjV9/live/46/master.m3u8
 #EXTINF:-1 tvg-id="britasia-tv" tvg-logo="https://images-2.rakuten.tv/storage/global-live-channel/translation/artwork-negative/9b320426-4a61-45dd-950f-590e1c505ed3.png" group-title="Entertainment",BritAsia TV
 https://9e2bea53.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWV1X0JyaXRBc2lhVFZfSExT/playlist.m3u8
 #EXTINF:-1 tvg-id="hotel-inspector" tvg-logo="https://images-0.rakuten.tv/storage/global-live-channel/translation/artwork-negative/1ba065a6-cb2c-4e6e-925f-5b11a8a84ff5.png" group-title="Entertainment",Hotel Inspector
@@ -358,11 +360,11 @@ https://d39g1vxj2ef6in.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae0
 #EXTINF:-1 tvg-id="sony-one-faves-en" tvg-logo="https://images-0.rakuten.tv/storage/global-live-channel/translation/artwork-negative/8d403b0f-1de8-485b-a9b1-b83ed0384a00.png" group-title="TV Shows",Sony One | Faves
 https://bd773ab2407a4e02bd84c0d5f13bd0a1.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-806-UK-SONYONEFAVES-RAKUTEN_UK/playlist.m3u8
 #EXTINF:-1 tvg-id="free-movies-plus" tvg-logo="https://images-0.rakuten.tv/storage/global-live-channel/translation/artwork-negative/a1d2fc21-6725-4b30-b6d2-ace342a83005.png" group-title="Movies",Free Movies +
-https://free-movies-plus-uk.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-hls-aes128-ottstudio-1-restreaming/bitok/eyJzdGlkIjoiNGUwYjZlM2EtMjJkNi00NTViLWI5MTgtNGI3MzVmNzdhMjM2IiwibWt0IjoidWsiLCJjaCI6IjEiLCJwdGYiOjV9/live/28/master.m3u8
+https://free-movies-plus-uk.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-hls-aes128-ottstudio-1-restreaming/bitok/eyJzdGlkIjoiNjQzNTVmMzgtYjQwOS00OTViLWI0OGUtNzRjY2EzYmJiZjg5IiwibWt0IjoidWsiLCJjaCI6IjEiLCJwdGYiOjV9/live/28/master.m3u8
 #EXTINF:-1 tvg-id="grjngo-en" tvg-logo="https://images-3.rakuten.tv/storage/global-live-channel/translation/artwork-negative/f9bda1b0-b3a3-454e-b256-2b615a21908f.png" group-title="Movies",Grjngo - Western Films
 https://66f81a14eebd497482b26d30b7a5fe07.mediatailor.us-east-1.amazonaws.com/v1/master/0fb304b2320b25f067414d481a779b77db81760d/RakutenTV-gb_GrjngoWesternMovies/playlist.m3u8
 #EXTINF:-1 tvg-id="westerns-plus" tvg-logo="https://images-2.rakuten.tv/storage/global-live-channel/translation/artwork-negative/31794ce7-cbc4-4e34-9fd5-e84e9fc2413e.png" group-title="Movies",Westerns +
-https://westerns-plus-uk.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-hls-aes128-ottstudio-2-restreaming/bitok/eyJzdGlkIjoiNGNlYTBiNTYtZjljOS00YmZmLTg3NWItMDdlMWY3ZmQ0ZWI1IiwibWt0IjoidWsiLCJjaCI6IjIiLCJwdGYiOjV9/live/29/master.m3u8
+https://westerns-plus-uk.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-hls-aes128-ottstudio-2-restreaming/bitok/eyJzdGlkIjoiOTE1MDZmZGQtZTkzOS00YjQwLThlYzktZWRhYWE5NDU1MjVhIiwibWt0IjoidWsiLCJjaCI6IjIiLCJwdGYiOjV9/live/29/master.m3u8
 #EXTINF:-1 tvg-id="nolly-africa" tvg-logo="https://images-1.rakuten.tv/storage/global-live-channel/translation/artwork-negative/09f78035-a086-4076-ae51-19c263f68b9c.png" group-title="Movies",Nolly Africa HD
 https://amg02784-amg02784c1-rakuten-gb-8121.playouts.now.amagi.tv/playlist/amg02784-nollyafricafast-nollyafricahd-rakutengb/playlist.m3u8
 #EXTINF:-1 tvg-id="british-screen-classics" tvg-logo="https://images-3.rakuten.tv/storage/global-live-channel/translation/artwork-negative/fd2c4dc2-1e23-4608-8eb8-34d69b54f076.png" group-title="Movies",British Screen Classics
