@@ -107,5 +107,7 @@ jobs:
             echo "No changes"
           else
             git commit -m "chore: update EPG and playlists [$(date -u '+%Y-%m-%d %H:%M UTC')]"
-            git push
+            # newer run wins: rebase onto anything that landed meanwhile; on a conflict, abort and still publish
+            git pull --rebase origin main || git rebase --abort
+            git push --force-with-lease
           fi
